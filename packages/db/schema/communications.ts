@@ -8,6 +8,7 @@ import {
   jsonb,
   timestamp,
   index,
+  unique,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
@@ -56,7 +57,7 @@ export const communications = pgTable(
     dedupeKey: varchar("dedupe_key", { length: 160 }),
   },
   (table) => ({
-    tenantIdUq: uniqueIndex("communications_practice_id_uq").on(
+    tenantIdUq: unique("communications_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
@@ -82,7 +83,7 @@ export const communications = pgTable(
       table.assignedTo,
       table.deletedAt,
     ),
-    dedupeKeyIdx: uniqueIndex("communications_dedupe_key_idx").on(
+    dedupeKeyIdx: unique("communications_dedupe_key_idx").on(
       table.dedupeKey,
     ),
     providerMessageIdx: index("communications_provider_message_idx").on(

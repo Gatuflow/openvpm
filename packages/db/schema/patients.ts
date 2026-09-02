@@ -9,6 +9,7 @@ import {
   timestamp,
   numeric,
   index,
+  unique,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
@@ -71,11 +72,11 @@ export const patients = pgTable(
     status: patientStatusEnum("status").notNull().default("active"),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("patients_practice_id_uq").on(
+    practiceIdUq: unique("patients_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    practiceClientIdUq: uniqueIndex("patients_practice_client_id_uq").on(
+    practiceClientIdUq: unique("patients_practice_client_id_uq").on(
       table.practiceId,
       table.id,
       table.clientId,
@@ -145,7 +146,7 @@ export const patientAllergies = pgTable(
       .defaultNow(),
   },
   (table) => ({
-    idPatientUq: uniqueIndex("patient_allergies_id_patient_uq").on(
+    idPatientUq: unique("patient_allergies_id_patient_uq").on(
       table.id,
       table.patientId,
     ),

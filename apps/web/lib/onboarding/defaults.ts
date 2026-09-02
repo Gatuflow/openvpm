@@ -62,20 +62,7 @@ export interface DefaultService {
   taxable: boolean;
 }
 
-export const DEFAULT_SERVICES: DefaultService[] = [
-  { name: "Wellness Exam", category: "Exam", defaultPrice: "65.00", taxable: false },
-  { name: "Sick / Problem Exam", category: "Exam", defaultPrice: "75.00", taxable: false },
-  { name: "Recheck Exam", category: "Exam", defaultPrice: "45.00", taxable: false },
-  { name: "Rabies Vaccine", category: "Vaccination", defaultPrice: "35.00", taxable: true },
-  { name: "DHPP Vaccine", category: "Vaccination", defaultPrice: "40.00", taxable: true },
-  { name: "Bordetella Vaccine", category: "Vaccination", defaultPrice: "38.00", taxable: true },
-  { name: "FVRCP Vaccine", category: "Vaccination", defaultPrice: "40.00", taxable: true },
-  { name: "Microchip", category: "Procedure", defaultPrice: "55.00", taxable: true },
-  { name: "Nail Trim", category: "Procedure", defaultPrice: "20.00", taxable: true },
-  { name: "Dental Cleaning", category: "Surgery", defaultPrice: "450.00", taxable: false },
-  { name: "Spay / Neuter", category: "Surgery", defaultPrice: "350.00", taxable: false },
-  { name: "Heartworm Test", category: "Diagnostics", defaultPrice: "45.00", taxable: false },
-];
+export const DEFAULT_SERVICES: DefaultService[] = [];
 
 /**
  * Insert the default catalog for a freshly created practice. Idempotency is the
@@ -105,15 +92,16 @@ export async function seedPractice(
     }))
   );
 
-  await db.insert(services).values(
-    DEFAULT_SERVICES.map((s) => ({
-      practiceId: opts.practiceId,
-      name: s.name,
-      category: s.category,
-      defaultPrice: s.defaultPrice,
-      taxable: s.taxable,
-    }))
-  );
+  if (DEFAULT_SERVICES.length > 0) {
+    await db.insert(services).values(
+      DEFAULT_SERVICES.map((s) => ({
+        practiceId: opts.practiceId,
+        name: s.name,
+        category: s.category,
+        defaultPrice: s.defaultPrice,
+        taxable: s.taxable,
+      }))
+    );}
 }
 
 export interface DemoDataIds {

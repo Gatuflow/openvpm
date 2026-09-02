@@ -6,6 +6,7 @@ import {
   pgEnum,
   pgTable,
   timestamp,
+  unique,
   uniqueIndex,
   uuid,
   varchar,
@@ -108,10 +109,10 @@ export const clinicalRecordCorrections = pgTable(
     operationUq: uniqueIndex("clinical_record_corrections_operation_uq")
       .on(table.practiceId, table.operationId)
       .where(sql`${table.operationId} is not null`),
-    practiceRecordLabSourceUq: uniqueIndex(
+    practiceRecordLabSourceUq: unique(
       "clinical_record_corrections_practice_record_lab_source_uq",
     ).on(table.practiceId, table.id, table.labResultId),
-    practiceRecordSoapSourceUq: uniqueIndex(
+    practiceRecordSoapSourceUq: unique(
       "clinical_record_corrections_practice_record_soap_source_uq",
     ).on(table.practiceId, table.id, table.soapNoteId),
     appointmentPracticeFk: foreignKey({

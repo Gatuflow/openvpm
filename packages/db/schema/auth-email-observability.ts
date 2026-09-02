@@ -6,6 +6,7 @@ import {
   pgEnum,
   pgTable,
   timestamp,
+  unique,
   uniqueIndex,
   uuid,
   varchar,
@@ -74,7 +75,7 @@ export const authEmailAttempts = pgTable(
       foreignColumns: [users.practiceId, users.id],
       name: "auth_email_attempts_user_tenant_fk",
     }),
-    idempotencyUq: uniqueIndex("auth_email_attempts_idempotency_uq").on(
+    idempotencyUq: unique("auth_email_attempts_idempotency_uq").on(
       table.idempotencyKey,
     ),
     providerMessageUq: uniqueIndex("auth_email_attempts_provider_message_uq")
@@ -140,7 +141,7 @@ export const authEmailProviderIdentityConflicts = pgTable(
       foreignColumns: [authEmailAttempts.id],
       name: "auth_email_provider_identity_conflicts_attempt_fk",
     }),
-    identityUq: uniqueIndex(
+    identityUq: unique(
       "auth_email_provider_identity_conflicts_identity_uq",
     ).on(
       table.attemptId,
@@ -195,7 +196,7 @@ export const authEmailDeliveryEvents = pgTable(
     occurredAt: timestamp("occurred_at", { withTimezone: true }).notNull(),
   },
   (table) => ({
-    webhookUq: uniqueIndex("auth_email_delivery_events_webhook_uq").on(
+    webhookUq: unique("auth_email_delivery_events_webhook_uq").on(
       table.webhookId,
     ),
     attemptTimelineIdx: index(
@@ -262,7 +263,7 @@ export const authEmailWebhookConflicts = pgTable(
       foreignColumns: [authEmailDeliveryEvents.webhookId],
       name: "auth_email_webhook_conflicts_webhook_fk",
     }),
-    identityUq: uniqueIndex("auth_email_webhook_conflicts_identity_uq").on(
+    identityUq: unique("auth_email_webhook_conflicts_identity_uq").on(
       table.originalWebhookId,
       table.incomingRawBodyFingerprint,
     ),

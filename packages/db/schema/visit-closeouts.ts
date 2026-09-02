@@ -9,7 +9,7 @@ import {
   pgTable,
   text,
   timestamp,
-  uniqueIndex,
+  unique,
   uuid,
 } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
@@ -197,7 +197,7 @@ export const visitCloseouts = pgTable(
     revision: integer("revision").notNull().default(1),
   },
   (table) => ({
-    appointmentUq: uniqueIndex("visit_closeouts_appointment_uq").on(
+    appointmentUq: unique("visit_closeouts_appointment_uq").on(
       table.appointmentId,
     ),
     practiceStatusIdx: index("visit_closeouts_practice_status_idx").on(

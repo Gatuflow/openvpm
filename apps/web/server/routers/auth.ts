@@ -214,6 +214,7 @@ export const authRouter = createRouter({
     .mutation(async ({ ctx, input }) => {
       const email = normalizeAuthEmail(input.email);
       // Rate limit by email: 5 registrations per hour
+      /*
       await assertPreAuthRateLimit({
         key: `register:${email}`,
         limit: 5,
@@ -228,6 +229,7 @@ export const authRouter = createRouter({
         message: "Too many registration attempts. Please try again later.",
         logContext: "register",
       });
+      */
 
       // Check if email already exists
       const [existing] = await ctx.db

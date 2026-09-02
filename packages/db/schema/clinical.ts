@@ -12,6 +12,7 @@ import {
   check,
   foreignKey,
   index,
+  unique,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
@@ -109,7 +110,7 @@ export const soapNotes = pgTable(
   },
   (table) => ({
     patientIdx: index("soap_notes_patient_idx").on(table.patientId),
-    practiceRecordUq: uniqueIndex("soap_notes_practice_record_uq").on(
+    practiceRecordUq: unique("soap_notes_practice_record_uq").on(
       table.practiceId,
       table.id,
     ),
@@ -215,7 +216,7 @@ export const soapNoteAddenda = pgTable(
       table.createdAt,
       table.id,
     ),
-    operationUq: uniqueIndex("soap_note_addenda_operation_uq").on(
+    operationUq: unique("soap_note_addenda_operation_uq").on(
       table.practiceId,
       table.operationId,
     ),
@@ -280,7 +281,7 @@ export const vaccinationRecords = pgTable(
       table.patientId,
       table.nextDueDate,
     ),
-    practiceRecordUq: uniqueIndex("vaccination_records_practice_record_uq").on(
+    practiceRecordUq: unique("vaccination_records_practice_record_uq").on(
       table.practiceId,
       table.id,
     ),
@@ -294,7 +295,7 @@ export const vaccinationRecords = pgTable(
       table.appointmentId,
       table.deletedAt,
     ),
-    visitSourceUq: uniqueIndex("vaccination_records_visit_source_uq").on(
+    visitSourceUq: unique("vaccination_records_visit_source_uq").on(
       table.practiceId,
       table.appointmentId,
       table.id,
@@ -397,11 +398,11 @@ export const labResults = pgTable(
       table.followUpDueAt,
       table.id,
     ),
-    practiceRecordUq: uniqueIndex("lab_results_practice_record_uq").on(
+    practiceRecordUq: unique("lab_results_practice_record_uq").on(
       table.practiceId,
       table.id,
     ),
-    creationOperationUq: uniqueIndex("lab_results_creation_operation_uq").on(
+    creationOperationUq: unique("lab_results_creation_operation_uq").on(
       table.practiceId,
       table.creationOperationId,
     ),
@@ -410,7 +411,7 @@ export const labResults = pgTable(
       table.appointmentId,
       table.deletedAt,
     ),
-    visitSourceUq: uniqueIndex("lab_results_visit_source_uq").on(
+    visitSourceUq: unique("lab_results_visit_source_uq").on(
       table.practiceId,
       table.appointmentId,
       table.id,
@@ -554,7 +555,7 @@ export const procedures = pgTable(
       table.appointmentId,
       table.deletedAt,
     ),
-    visitSourceUq: uniqueIndex("procedures_visit_source_uq").on(
+    visitSourceUq: unique("procedures_visit_source_uq").on(
       table.practiceId,
       table.appointmentId,
       table.id,
@@ -658,7 +659,7 @@ export const vitalSigns = pgTable(
       table.patientId,
       table.recordedAt,
     ),
-    practiceRecordUq: uniqueIndex("vital_signs_practice_record_uq").on(
+    practiceRecordUq: unique("vital_signs_practice_record_uq").on(
       table.practiceId,
       table.id,
     ),

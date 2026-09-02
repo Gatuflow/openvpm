@@ -10,6 +10,7 @@ import {
   pgTable,
   text,
   timestamp,
+  unique,
   uniqueIndex,
   uuid,
   varchar,
@@ -225,8 +226,8 @@ export const clinicPilots = pgTable(
       .$onUpdate(() => new Date()),
   },
   (table) => ({
-    practiceUq: uniqueIndex("clinic_pilots_practice_uq").on(table.practiceId),
-    pilotPracticeUq: uniqueIndex("clinic_pilots_id_practice_uq").on(
+    practiceUq: unique("clinic_pilots_practice_uq").on(table.practiceId),
+    pilotPracticeUq: unique("clinic_pilots_id_practice_uq").on(
       table.id,
       table.practiceId,
     ),

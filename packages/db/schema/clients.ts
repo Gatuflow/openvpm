@@ -8,6 +8,7 @@ import {
   boolean,
   timestamp,
   index,
+  unique,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
@@ -67,7 +68,7 @@ export const clients = pgTable(
     }),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("clients_practice_id_uq").on(
+    practiceIdUq: unique("clients_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),

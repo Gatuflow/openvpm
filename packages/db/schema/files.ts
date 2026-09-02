@@ -6,6 +6,7 @@ import {
   integer,
   index,
   timestamp,
+  unique,
   uniqueIndex,
   date,
   foreignKey,
@@ -81,11 +82,11 @@ export const files = pgTable(
       table.practiceId,
       table.deletedAt,
     ),
-    practiceIdUq: uniqueIndex("files_practice_id_uq").on(
+    practiceIdUq: unique("files_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    practiceFileKeyUq: uniqueIndex("files_practice_file_key_uq").on(
+    practiceFileKeyUq: unique("files_practice_file_key_uq").on(
       table.practiceId,
       table.fileKey,
     ),
