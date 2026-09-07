@@ -240,7 +240,6 @@ function detachListenersIfIdle() {
   if (!listenersAttached || activeGuards.size > 0) return;
   if (sentinelActive) {
     pendingPopAction = "cleanup";
-    window.history.back();
     return;
   }
   removeListeners();
