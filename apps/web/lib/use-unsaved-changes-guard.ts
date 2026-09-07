@@ -260,7 +260,6 @@ function detachListenersIfIdle() {
   }
   if (sentinelActive) {
     pendingPopAction = "cleanup";
-    window.history.back();
     return;
   }
   removeListeners();
