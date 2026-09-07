@@ -25,6 +25,12 @@ export const speciesEnum = pgEnum("species", [
   "rabbit",
   "reptile",
   "equine",
+  "bovine",
+  "ovine",
+  "caprine",
+  "porcine",
+  "poultry",
+  "camelid",
   "other",
 ]);
 

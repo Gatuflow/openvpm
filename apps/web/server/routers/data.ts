@@ -38,6 +38,7 @@ import {
 import { finalizedSoapInsertValues } from "@/lib/records/soap-lifecycle";
 import {
   exportPracticeData,
+  practiceBackupContainsSealedConsentEvidence,
   restorePracticeData,
   summarizePracticeExport,
   validatePracticeFileRestoreTarget,
@@ -111,6 +112,12 @@ const importSpeciesInput = z.enum([
   "rabbit",
   "reptile",
   "equine",
+  "bovine",
+  "ovine",
+  "caprine",
+  "porcine",
+  "poultry",
+  "camelid",
   "other",
 ]);
 const importSexInput = z
@@ -2807,6 +2814,11 @@ export const dataRouter = createRouter({
         ctx.practiceId,
       );
       const restoreErrors = [...validation.errors, ...targetValidation.errors];
+      if (practiceBackupContainsSealedConsentEvidence(input.backup)) {
+        restoreErrors.push(
+          "This backup contains sealed signed-consent evidence. Use the database-owner recovery workflow; the web restore cannot import legal evidence.",
+        );
+      }
       await assertActivePractice(ctx);
 
       if (input.dryRun) {

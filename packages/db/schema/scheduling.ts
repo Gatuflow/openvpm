@@ -32,6 +32,11 @@ export const appointmentStatusEnum = pgEnum("appointment_status", [
   "cancelled",
 ]);
 
+export const appointmentOriginEnum = pgEnum("appointment_origin", [
+  "scheduled",
+  "field",
+]);
+
 export const roomTypeEnum = pgEnum("room_type", [
   "exam",
   "surgery",
@@ -134,6 +139,7 @@ export const appointments = pgTable(
     doctorId: uuid("doctor_id").references(() => users.id),
     roomId: uuid("room_id").references(() => rooms.id),
     status: appointmentStatusEnum("status").notNull().default("scheduled"),
+    origin: appointmentOriginEnum("origin").notNull().default("scheduled"),
     notes: text("notes"),
     recurringSeriesId: uuid("recurring_series_id").references(
       () => recurringSeries.id,
