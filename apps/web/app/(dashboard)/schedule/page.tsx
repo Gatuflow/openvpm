@@ -63,8 +63,8 @@ import {
 
 // --- Constants ---
 
-const START_HOUR = 8;
-const END_HOUR = 18;
+const START_HOUR = 0;
+const END_HOUR = 24;
 const HOUR_HEIGHT = 60; // px per hour
 const TOTAL_HOURS = END_HOUR - START_HOUR;
 const CALENDAR_HEIGHT = TOTAL_HOURS * HOUR_HEIGHT;
