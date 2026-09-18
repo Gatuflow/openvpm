@@ -11,6 +11,7 @@ import {
   check,
   foreignKey,
   index,
+  unique,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
@@ -99,7 +100,7 @@ export const rooms = pgTable(
       table.locationId,
       table.deletedAt,
     ),
-    practiceLocationIdUq: uniqueIndex("rooms_practice_location_id_uq").on(
+    practiceLocationIdUq: unique("rooms_practice_location_id_uq").on(
       table.practiceId,
       table.locationId,
       table.id,
@@ -145,16 +146,16 @@ export const appointments = pgTable(
     ),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("appointments_practice_id_uq").on(
+    practiceIdUq: unique("appointments_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    practicePatientIdUq: uniqueIndex("appointments_practice_patient_id_uq").on(
+    practicePatientIdUq: unique("appointments_practice_patient_id_uq").on(
       table.practiceId,
       table.id,
       table.patientId,
     ),
-    practicePatientClientIdUq: uniqueIndex(
+    practicePatientClientIdUq: unique(
       "appointments_practice_patient_client_id_uq",
     ).on(table.practiceId, table.id, table.patientId, table.clientId),
     practiceTimeIdx: index("appointments_practice_time_idx").on(

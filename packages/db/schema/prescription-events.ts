@@ -8,6 +8,7 @@ import {
   pgTable,
   timestamp,
   text,
+  unique,
   uniqueIndex,
   uuid,
   varchar,
@@ -79,7 +80,7 @@ export const prescriptionEvents = pgTable(
     terminalUq: uniqueIndex("prescription_events_terminal_uq")
       .on(table.practiceId, table.prescriptionId)
       .where(sql`${table.eventType} in ('completed', 'cancelled', 'expired')`),
-    practiceIdUq: uniqueIndex("prescription_events_practice_id_uq").on(
+    practiceIdUq: unique("prescription_events_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),

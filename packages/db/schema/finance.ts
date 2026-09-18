@@ -7,7 +7,7 @@ import {
   integer,
   pgTable,
   timestamp,
-  uniqueIndex,
+  unique,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -64,20 +64,20 @@ export const paymentProcessorSettlements = pgTable(
     lastSyncedAt: timestamp("last_synced_at", { withTimezone: true }).notNull(),
   },
   (table) => ({
-    paymentUq: uniqueIndex("payment_processor_settlements_payment_uq").on(
+    paymentUq: unique("payment_processor_settlements_payment_uq").on(
       table.paymentId,
     ),
-    checkoutUq: uniqueIndex("payment_processor_settlements_checkout_uq").on(
+    checkoutUq: unique("payment_processor_settlements_checkout_uq").on(
       table.provider,
       table.connectedAccountId,
       table.checkoutSessionId,
     ),
-    chargeUq: uniqueIndex("payment_processor_settlements_charge_uq").on(
+    chargeUq: unique("payment_processor_settlements_charge_uq").on(
       table.provider,
       table.connectedAccountId,
       table.chargeId,
     ),
-    balanceTransactionUq: uniqueIndex(
+    balanceTransactionUq: unique(
       "payment_processor_settlements_balance_transaction_uq",
     ).on(table.provider, table.connectedAccountId, table.balanceTransactionId),
     practiceDateIdx: index(
@@ -88,10 +88,10 @@ export const paymentProcessorSettlements = pgTable(
       table.payoutId,
       table.payoutStatus,
     ),
-    practiceIdUq: uniqueIndex(
+    practiceIdUq: unique(
       "payment_processor_settlements_practice_id_uq",
     ).on(table.practiceId, table.id),
-    tenantPaymentUq: uniqueIndex(
+    tenantPaymentUq: unique(
       "payment_processor_settlements_tenant_payment_uq",
     ).on(table.practiceId, table.id, table.paymentId),
     invoiceTenantFk: foreignKey({
@@ -170,10 +170,10 @@ export const paymentProcessorRefunds = pgTable(
     lastSyncedAt: timestamp("last_synced_at", { withTimezone: true }).notNull(),
   },
   (table) => ({
-    refundPaymentUq: uniqueIndex("payment_processor_refunds_payment_uq").on(
+    refundPaymentUq: unique("payment_processor_refunds_payment_uq").on(
       table.refundPaymentId,
     ),
-    externalUq: uniqueIndex("payment_processor_refunds_external_uq").on(
+    externalUq: unique("payment_processor_refunds_external_uq").on(
       table.provider,
       table.externalRefundId,
     ),
@@ -247,7 +247,7 @@ export const paymentProcessorPayouts = pgTable(
     lastSyncedAt: timestamp("last_synced_at", { withTimezone: true }).notNull(),
   },
   (table) => ({
-    externalUq: uniqueIndex("payment_processor_payouts_external_uq").on(
+    externalUq: unique("payment_processor_payouts_external_uq").on(
       table.provider,
       table.connectedAccountId,
       table.externalPayoutId,
@@ -307,7 +307,7 @@ export const paymentDisputes = pgTable(
     lastSyncedAt: timestamp("last_synced_at", { withTimezone: true }).notNull(),
   },
   (table) => ({
-    externalUq: uniqueIndex("payment_disputes_external_uq").on(
+    externalUq: unique("payment_disputes_external_uq").on(
       table.provider,
       table.externalDisputeId,
     ),
@@ -365,7 +365,7 @@ export const financialCloses = pgTable(
     unreconciledCount: integer("unreconciled_count").notNull(),
   },
   (table) => ({
-    practiceDayUq: uniqueIndex("financial_closes_practice_day_uq").on(
+    practiceDayUq: unique("financial_closes_practice_day_uq").on(
       table.practiceId,
       table.businessDate,
     ),

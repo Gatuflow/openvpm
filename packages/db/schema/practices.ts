@@ -9,6 +9,7 @@ import {
   numeric,
   timestamp,
   index,
+  unique,
   uniqueIndex,
   check,
 } from "drizzle-orm/pg-core";
@@ -117,7 +118,7 @@ export const locations = pgTable(
     isPrimary: boolean("is_primary").notNull().default(false),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("locations_practice_id_uq").on(
+    practiceIdUq: unique("locations_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),

@@ -8,6 +8,7 @@ import {
   pgTable,
   text,
   timestamp,
+  unique,
   uniqueIndex,
   uuid,
   varchar,
@@ -128,7 +129,7 @@ export const smsProviderEvents = pgTable(
     lastErrorDetail: varchar("last_error_detail", { length: 2000 }),
   },
   (table) => ({
-    providerEventKeyUq: uniqueIndex(
+    providerEventKeyUq: unique(
       "sms_provider_events_provider_event_key_uq",
     ).on(table.provider, table.eventKey),
     dueIdx: index("sms_provider_events_due_idx")
@@ -398,7 +399,7 @@ export const smsProviderEventConflicts = pgTable(
     }),
   },
   (table) => ({
-    identityUq: uniqueIndex("sms_provider_event_conflicts_identity_uq").on(
+    identityUq: unique("sms_provider_event_conflicts_identity_uq").on(
       table.originalEventId,
       table.incomingRawBodyFingerprintSha256,
     ),
@@ -448,10 +449,10 @@ export const smsProviderEventConflictReviews = pgTable(
     reviewedByName: varchar("reviewed_by_name", { length: 255 }).notNull(),
   },
   (table) => ({
-    conflictUq: uniqueIndex(
+    conflictUq: unique(
       "sms_provider_event_conflict_reviews_conflict_uq",
     ).on(table.conflictId),
-    operationUq: uniqueIndex(
+    operationUq: unique(
       "sms_provider_event_conflict_reviews_operation_uq",
     ).on(table.operationId),
     historyIdx: index("sms_provider_event_conflict_reviews_history_idx").on(
@@ -533,10 +534,10 @@ export const smsProviderEventResolutions = pgTable(
       table.resolvedAt,
       table.id,
     ),
-    conflictUq: uniqueIndex("sms_provider_event_resolutions_conflict_uq").on(
+    conflictUq: unique("sms_provider_event_resolutions_conflict_uq").on(
       table.conflictId,
     ),
-    operationUq: uniqueIndex("sms_provider_event_resolutions_operation_uq").on(
+    operationUq: unique("sms_provider_event_resolutions_operation_uq").on(
       table.operationId,
     ),
     practiceHistoryIdx: index(

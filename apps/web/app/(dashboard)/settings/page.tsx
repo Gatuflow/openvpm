@@ -182,9 +182,10 @@ const TIMEZONES = [
   "Europe/London",
   "Europe/Dublin",
   "Australia/Sydney",
+  "America/Argentina/Buenos_Aires"
 ];
 
-const CURRENCIES = ["usd", "gbp", "eur", "cad", "aud"];
+const CURRENCIES = ["usd", "gbp", "eur", "cad", "aud", "ars"];
 
 const PRESET_COLORS = [
   "#0d9488",

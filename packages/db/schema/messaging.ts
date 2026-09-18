@@ -6,6 +6,7 @@ import {
   text,
   boolean,
   index,
+  unique,
   uniqueIndex,
   integer,
   timestamp,
@@ -99,10 +100,10 @@ export const messagingRegistrations = pgTable(
     lastError: text("last_error"),
   },
   (t) => ({
-    practiceIdx: uniqueIndex("messaging_registrations_practice_idx").on(
+    practiceIdx: unique("messaging_registrations_practice_idx").on(
       t.practiceId,
     ),
-    practiceIdUq: uniqueIndex("messaging_registrations_practice_id_uq").on(
+    practiceIdUq: unique("messaging_registrations_practice_id_uq").on(
       t.practiceId,
       t.id,
     ),

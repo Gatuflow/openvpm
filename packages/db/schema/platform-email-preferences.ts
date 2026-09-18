@@ -6,6 +6,7 @@ import {
   integer,
   pgTable,
   timestamp,
+  unique,
   uniqueIndex,
   uuid,
   varchar,
@@ -146,7 +147,7 @@ export const platformEmailPreferences = pgTable(
     updatedByUserId: uuid("updated_by_user_id"),
   },
   (table) => ({
-    emailHashUq: uniqueIndex("platform_email_preferences_email_hash_uq").on(
+    emailHashUq: unique("platform_email_preferences_email_hash_uq").on(
       table.emailHash,
     ),
     fingerprintIdx: index(

@@ -9,6 +9,7 @@ import {
   boolean,
   integer,
   index,
+  unique,
   uniqueIndex,
   jsonb,
 } from "drizzle-orm/pg-core";
@@ -61,7 +62,7 @@ export const users = pgTable(
     }),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("users_practice_id_uq").on(
+    practiceIdUq: unique("users_practice_id_uq").on(
       table.practiceId,
       table.id
     ),

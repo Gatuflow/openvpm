@@ -7,6 +7,7 @@ import {
   integer,
   index,
   timestamp,
+  unique,
   uniqueIndex,
   foreignKey,
   check,
@@ -58,7 +59,7 @@ export const consentForms = pgTable(
       table.practiceId,
       table.deletedAt,
     ),
-    practiceIdUq: uniqueIndex("consent_forms_practice_id_uq").on(
+    practiceIdUq: unique("consent_forms_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),

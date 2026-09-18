@@ -7,6 +7,7 @@ import {
   pgTable,
   text,
   timestamp,
+  unique,
   uniqueIndex,
   uuid,
   varchar,
@@ -107,11 +108,11 @@ export const smsSendAttempts = pgTable(
     senderE164: varchar("sender_e164", { length: 16 }),
   },
   (table) => ({
-    tenantIdUq: uniqueIndex("sms_send_attempts_practice_id_uq").on(
+    tenantIdUq: unique("sms_send_attempts_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    idempotencyUq: uniqueIndex("sms_send_attempts_practice_idempotency_uq").on(
+    idempotencyUq: unique("sms_send_attempts_practice_idempotency_uq").on(
       table.practiceId,
       table.idempotencyKey,
     ),
@@ -354,7 +355,7 @@ export const smsDeliveryEvents = pgTable(
     }).notNull(),
   },
   (table) => ({
-    providerEventKeyUq: uniqueIndex(
+    providerEventKeyUq: unique(
       "sms_delivery_events_provider_event_key_uq",
     ).on(table.provider, table.eventKey),
     providerMessageIdx: index("sms_delivery_events_provider_message_idx").on(
@@ -443,7 +444,7 @@ export const smsDeliveryEventHistory = pgTable(
       table.createdAt,
       table.id,
     ),
-    eventIdUq: uniqueIndex("sms_delivery_event_history_event_id_uq").on(
+    eventIdUq: unique("sms_delivery_event_history_event_id_uq").on(
       table.deliveryEventId,
       table.id,
     ),

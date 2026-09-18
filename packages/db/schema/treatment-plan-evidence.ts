@@ -10,7 +10,7 @@ import {
   pgTable,
   text,
   timestamp,
-  uniqueIndex,
+  unique,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -77,11 +77,11 @@ export const visitTreatmentPlans = pgTable(
     }).notNull(),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("visit_treatment_plans_practice_id_uq").on(
+    practiceIdUq: unique("visit_treatment_plans_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    practiceOperationUq: uniqueIndex(
+    practiceOperationUq: unique(
       "visit_treatment_plans_practice_operation_uq",
     ).on(table.practiceId, table.operationId),
     patientHistoryIdx: index("visit_treatment_plans_patient_history_idx").on(
@@ -158,13 +158,13 @@ export const visitTreatmentPlanRevisions = pgTable(
     contentSha256: varchar("content_sha256", { length: 64 }).notNull(),
   },
   (table) => ({
-    practicePlanIdUq: uniqueIndex(
+    practicePlanIdUq: unique(
       "visit_treatment_plan_revisions_practice_plan_id_uq",
     ).on(table.practiceId, table.id, table.planId),
-    planRevisionUq: uniqueIndex(
+    planRevisionUq: unique(
       "visit_treatment_plan_revisions_plan_revision_uq",
     ).on(table.planId, table.revisionNumber),
-    practiceOperationUq: uniqueIndex(
+    practiceOperationUq: unique(
       "visit_treatment_plan_revisions_practice_operation_uq",
     ).on(table.practiceId, table.operationId),
     planHistoryIdx: index("visit_treatment_plan_revisions_plan_history_idx").on(
@@ -234,10 +234,10 @@ export const visitTreatmentPlanRevisionLines = pgTable(
     productId: uuid("product_id"),
   },
   (table) => ({
-    practiceRevisionIdUq: uniqueIndex(
+    practiceRevisionIdUq: unique(
       "visit_treatment_plan_revision_lines_practice_revision_id_uq",
     ).on(table.practiceId, table.id, table.revisionId),
-    revisionOrderUq: uniqueIndex(
+    revisionOrderUq: unique(
       "visit_treatment_plan_revision_lines_revision_order_uq",
     ).on(table.revisionId, table.sortOrder),
     revisionOrderIdx: index(
@@ -401,16 +401,16 @@ export const visitTreatmentPlanResponses = pgTable(
     responseSha256: varchar("response_sha256", { length: 64 }).notNull(),
   },
   (table) => ({
-    practiceRevisionIdUq: uniqueIndex(
+    practiceRevisionIdUq: unique(
       "visit_treatment_plan_responses_practice_revision_id_uq",
     ).on(table.practiceId, table.id, table.revisionId),
-    revisionUq: uniqueIndex("visit_treatment_plan_responses_revision_uq").on(
+    revisionUq: unique("visit_treatment_plan_responses_revision_uq").on(
       table.revisionId,
     ),
-    consentUq: uniqueIndex("visit_treatment_plan_responses_consent_uq").on(
+    consentUq: unique("visit_treatment_plan_responses_consent_uq").on(
       table.consentRequestId,
     ),
-    practiceOperationUq: uniqueIndex(
+    practiceOperationUq: unique(
       "visit_treatment_plan_responses_practice_operation_uq",
     ).on(table.practiceId, table.operationId),
     patientHistoryIdx: index(
@@ -472,7 +472,7 @@ export const visitTreatmentPlanResponseLines = pgTable(
     declineReason: text("decline_reason"),
   },
   (table) => ({
-    responseLineUq: uniqueIndex(
+    responseLineUq: unique(
       "visit_treatment_plan_response_lines_response_line_uq",
     ).on(table.responseId, table.revisionLineId),
     responseOrderIdx: index(

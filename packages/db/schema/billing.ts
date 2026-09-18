@@ -10,6 +10,7 @@ import {
   boolean,
   date,
   timestamp,
+  unique,
   index,
   uniqueIndex,
   check,
@@ -82,13 +83,13 @@ export const practicePaymentAccounts = pgTable(
     lastSyncedAt: timestamp("last_synced_at", { withTimezone: true }),
   },
   (table) => ({
-    practiceProviderUq: uniqueIndex(
+    practiceProviderUq: unique(
       "practice_payment_accounts_practice_provider_uq"
     ).on(table.practiceId, table.provider),
-    stripeAccountUq: uniqueIndex(
+    stripeAccountUq: unique(
       "practice_payment_accounts_stripe_account_uq"
     ).on(table.stripeAccountId),
-    tenantProviderAccountUq: uniqueIndex(
+    tenantProviderAccountUq: unique(
       "practice_payment_accounts_tenant_provider_account_uq"
     ).on(table.practiceId, table.provider, table.stripeAccountId),
     practiceStatusIdx: index("practice_payment_accounts_status_idx").on(
@@ -121,7 +122,7 @@ export const services = pgTable(
       table.deletedAt,
       table.name
     ),
-    practiceIdUq: uniqueIndex("services_practice_id_uq").on(
+    practiceIdUq: unique("services_practice_id_uq").on(
       table.practiceId,
       table.id
     ),
@@ -210,12 +211,12 @@ export const invoices = pgTable(
           and ${table.status} <> 'void'
           and ${table.deletedAt} is null`
       ),
-    visitTargetUq: uniqueIndex("invoices_visit_target_uq").on(
+    visitTargetUq: unique("invoices_visit_target_uq").on(
       table.practiceId,
       table.appointmentId,
       table.id
     ),
-    practiceIdUq: uniqueIndex("invoices_practice_id_uq").on(
+    practiceIdUq: unique("invoices_practice_id_uq").on(
       table.practiceId,
       table.id
     ),
@@ -279,7 +280,7 @@ export const invoiceItems = pgTable(
       .where(
         sql`${table.sourceDispenseChargeId} is not null and ${table.deletedAt} is null`
       ),
-    invoiceItemTargetUq: uniqueIndex("invoice_items_invoice_item_target_uq").on(
+    invoiceItemTargetUq: unique("invoice_items_invoice_item_target_uq").on(
       table.invoiceId,
       table.id
     ),
@@ -305,7 +306,7 @@ export const invoiceAdjustments = pgTable(
       table.invoiceId,
       table.deletedAt
     ),
-    operationKeyUq: uniqueIndex("invoice_adjustments_operation_key_uq").on(
+    operationKeyUq: unique("invoice_adjustments_operation_key_uq").on(
       table.operationKey
     ),
     operationResultCheck: check(
@@ -365,7 +366,7 @@ export const products = pgTable(
       table.deletedAt,
       table.stockQuantity
     ),
-    practiceIdUq: uniqueIndex("products_practice_id_uq").on(
+    practiceIdUq: unique("products_practice_id_uq").on(
       table.practiceId,
       table.id
     ),
@@ -467,8 +468,8 @@ export const payments = pgTable(
       table.deletedAt,
       table.receivedAt
     ),
-    externalIdUq: uniqueIndex("payments_external_id_uq").on(table.externalId),
-    invoiceIdUq: uniqueIndex("payments_invoice_id_uq").on(
+    externalIdUq: unique("payments_external_id_uq").on(table.externalId),
+    invoiceIdUq: unique("payments_invoice_id_uq").on(
       table.invoiceId,
       table.id
     ),

@@ -7,7 +7,7 @@ import {
   pgTable,
   primaryKey,
   timestamp,
-  uniqueIndex,
+  unique,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -62,7 +62,7 @@ export const practiceConversionMilestones = pgTable(
   },
   (table) => ({
     pk: primaryKey({ columns: [table.practiceId, table.milestone] }),
-    evidenceUq: uniqueIndex("practice_conversion_milestones_evidence_uq").on(
+    evidenceUq: unique("practice_conversion_milestones_evidence_uq").on(
       table.evidenceSource,
       table.evidenceKey,
       table.milestone,

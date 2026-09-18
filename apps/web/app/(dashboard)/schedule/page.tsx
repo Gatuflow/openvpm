@@ -63,8 +63,8 @@ import {
 
 // --- Constants ---
 
-const START_HOUR = 8;
-const END_HOUR = 18;
+const START_HOUR = 0;
+const END_HOUR = 24;
 const HOUR_HEIGHT = 60; // px per hour
 const TOTAL_HOURS = END_HOUR - START_HOUR;
 const CALENDAR_HEIGHT = TOTAL_HOURS * HOUR_HEIGHT;
@@ -1819,9 +1819,8 @@ function SendReminderButton({ appointmentId }: { appointmentId: string }) {
 
 function generateTimeSlots(): { label: string; value: string }[] {
   const slots: { label: string; value: string }[] = [];
-  for (let hour = 8; hour <= 17; hour++) {
+  for (let hour = 0; hour <= 23; hour++) {
     for (const min of [0, 30]) {
-      if (hour === 17 && min > 30) break;
       const h12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
       const ampm = hour < 12 ? "AM" : "PM";
       const label = `${h12}:${String(min).padStart(2, "0")} ${ampm}`;

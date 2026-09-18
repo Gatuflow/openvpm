@@ -11,6 +11,7 @@ import {
   pgTable,
   text,
   timestamp,
+  unique,
   uniqueIndex,
   uuid,
   varchar,
@@ -110,7 +111,7 @@ export const clientContacts = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("client_contacts_practice_id_uq").on(
+    practiceIdUq: unique("client_contacts_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
@@ -186,16 +187,16 @@ export const historicalAppointments = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("historical_appointments_practice_id_uq").on(
+    practiceIdUq: unique("historical_appointments_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    externalIdUq: uniqueIndex("historical_appointments_external_id_uq").on(
+    externalIdUq: unique("historical_appointments_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "historical_appointments_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
     patientTimelineIdx: index(
@@ -268,16 +269,16 @@ export const externalPrescriptions = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("external_prescriptions_practice_id_uq").on(
+    practiceIdUq: unique("external_prescriptions_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    externalIdUq: uniqueIndex("external_prescriptions_external_id_uq").on(
+    externalIdUq: unique("external_prescriptions_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "external_prescriptions_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
     patientStatusIdx: index("external_prescriptions_patient_status_idx").on(
@@ -348,12 +349,12 @@ export const externalPrescriptionFills = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    externalIdUq: uniqueIndex("external_prescription_fills_external_id_uq").on(
+    externalIdUq: unique("external_prescription_fills_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "external_prescription_fills_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
     historyIdx: index("external_prescription_fills_history_idx").on(
@@ -415,16 +416,16 @@ export const externalLabReports = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("external_lab_reports_practice_id_uq").on(
+    practiceIdUq: unique("external_lab_reports_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    externalIdUq: uniqueIndex("external_lab_reports_external_id_uq").on(
+    externalIdUq: unique("external_lab_reports_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "external_lab_reports_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
     patientTimelineIdx: index("external_lab_reports_patient_timeline_idx").on(
@@ -499,12 +500,12 @@ export const externalLabObservations = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    externalIdUq: uniqueIndex("external_lab_observations_external_id_uq").on(
+    externalIdUq: unique("external_lab_observations_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "external_lab_observations_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
     reportOrderIdx: index("external_lab_observations_report_order_idx").on(
@@ -573,16 +574,16 @@ export const legacyFinancialDocuments = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("legacy_financial_documents_practice_id_uq").on(
+    practiceIdUq: unique("legacy_financial_documents_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    externalIdUq: uniqueIndex("legacy_financial_documents_external_id_uq").on(
+    externalIdUq: unique("legacy_financial_documents_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "legacy_financial_documents_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
     clientTimelineIdx: index(
@@ -649,12 +650,12 @@ export const legacyFinancialLineItems = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    externalIdUq: uniqueIndex("legacy_financial_line_items_external_id_uq").on(
+    externalIdUq: unique("legacy_financial_line_items_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "legacy_financial_line_items_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
     documentOrderIdx: index("legacy_financial_line_items_document_order_idx").on(
@@ -717,16 +718,16 @@ export const legacyFinancialPayments = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    practiceIdUq: uniqueIndex("legacy_financial_payments_practice_id_uq").on(
+    practiceIdUq: unique("legacy_financial_payments_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
-    externalIdUq: uniqueIndex("legacy_financial_payments_external_id_uq").on(
+    externalIdUq: unique("legacy_financial_payments_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "legacy_financial_payments_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
     clientTimelineIdx: index(
@@ -778,12 +779,12 @@ export const legacyFinancialAllocations = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    externalIdUq: uniqueIndex("legacy_financial_allocations_external_id_uq").on(
+    externalIdUq: unique("legacy_financial_allocations_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "legacy_financial_allocations_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
     documentIdx: index("legacy_financial_allocations_document_idx").on(
@@ -858,15 +859,15 @@ export const historicalDocuments = pgTable(
     importFingerprint: varchar("import_fingerprint", { length: 64 }).notNull(),
   },
   (table) => ({
-    externalIdUq: uniqueIndex("historical_documents_external_id_uq").on(
+    externalIdUq: unique("historical_documents_external_id_uq").on(
       table.practiceId,
       table.externalSource,
       table.externalId,
     ),
-    importFingerprintUq: uniqueIndex(
+    importFingerprintUq: unique(
       "historical_documents_import_fingerprint_uq",
     ).on(table.practiceId, table.importFingerprint),
-    fileUq: uniqueIndex("historical_documents_file_uq").on(
+    fileUq: unique("historical_documents_file_uq").on(
       table.practiceId,
       table.fileId,
     ),
