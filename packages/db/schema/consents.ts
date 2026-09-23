@@ -8,7 +8,6 @@ import {
   index,
   timestamp,
   unique,
-  uniqueIndex,
   foreignKey,
   check,
   customType,
@@ -51,7 +50,7 @@ export const consentForms = pgTable(
     isActive: boolean("is_active").notNull().default(true),
   },
   (table) => ({
-    practiceSlugUq: uniqueIndex("consent_forms_practice_slug_uq").on(
+    practiceSlugUq: unique("consent_forms_practice_slug_uq").on(
       table.practiceId,
       table.slug,
     ),
@@ -156,11 +155,11 @@ export const consentRequests = pgTable(
     }),
   },
   (table) => ({
-    tokenUq: uniqueIndex("consent_requests_token_uq").on(table.token),
-    tokenHashUq: uniqueIndex("consent_requests_token_hash_uq").on(
+    tokenUq: unique("consent_requests_token_uq").on(table.token),
+    tokenHashUq: unique("consent_requests_token_hash_uq").on(
       table.tokenHash,
     ),
-    practiceIdUq: uniqueIndex("consent_requests_practice_id_uq").on(
+    practiceIdUq: unique("consent_requests_practice_id_uq").on(
       table.practiceId,
       table.id,
     ),
@@ -278,10 +277,10 @@ export const consentReceiptCapabilities = pgTable(
     lastClaimedAt: timestamp("last_claimed_at", { withTimezone: true }),
   },
   (table) => ({
-    tokenHashUq: uniqueIndex("consent_receipt_capabilities_token_hash_uq").on(
+    tokenHashUq: unique("consent_receipt_capabilities_token_hash_uq").on(
       table.tokenHash,
     ),
-    consentUq: uniqueIndex("consent_receipt_capabilities_consent_uq").on(
+    consentUq: unique("consent_receipt_capabilities_consent_uq").on(
       table.practiceId,
       table.consentRequestId,
     ),
