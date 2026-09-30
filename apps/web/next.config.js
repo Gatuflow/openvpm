@@ -8,6 +8,15 @@ const nextConfig = {
   output: "standalone",
   poweredByHeader: false,
   transpilePackages: ["@openpims/api", "@openpims/db", "@openpims/email"],
+  
+  proxyClientMaxBodySize: "500mb",
+  
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "500mb",
+    },
+  },
+  
   async headers() {
     return [
       {

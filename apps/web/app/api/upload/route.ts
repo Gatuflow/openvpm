@@ -178,32 +178,11 @@ export async function POST(req: NextRequest) {
       // ---------- Parse multipart form data ----------
       let formData: FormData;
       try {
-        const body = await readRequestBytesWithLimit(
-          req,
-          UPLOAD_REQUEST_MAX_BYTES,
-        );
-        if (!body.ok) {
-          return NextResponse.json(
-            { error: "Upload exceeds maximum request size" },
-            { status: 413 },
-          );
-        }
-
-        const boundedBody = new ArrayBuffer(body.bytes.byteLength);
-        new Uint8Array(boundedBody).set(body.bytes);
-        const boundedRequest = new Request(req.url, {
-          method: req.method,
-          headers: req.headers,
-          body: boundedBody,
-        });
-        formData = await boundedRequest.formData();
-      } catch {
-        return NextResponse.json(
-          { error: "Invalid form data" },
-          { status: 400 },
-        );
+	      formData = await req.formData();
+      } catch (e) {
+	      console.error("Error al parsear formData:", e);
+	      return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
       }
-
       const file = formData.get("file");
       const category = formData.get("category");
       const patientIdValue = formData.get("patientId");
@@ -286,7 +265,7 @@ export async function POST(req: NextRequest) {
       if (file.size > maxFileBytes) {
         return NextResponse.json(
           { error: isPatientDocument
-              ? "Document exceeds 4 MB. Compress the file or split large records into smaller PDFs."
+              ? "Document exceeds 500 MB. Compress the file or split large records into smaller PDFs."
               : "File exceeds maximum size of 10 MB" },
           { status: 400 },
         );

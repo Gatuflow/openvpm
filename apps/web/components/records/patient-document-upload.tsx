@@ -34,9 +34,8 @@ export function PatientDocumentUpload({ patientId }: { patientId: string }) {
   async function upload() {
     if (!file || busyRef.current) return;
     if (!isAllowedUploadMimeType(file.type) || file.size > PATIENT_DOCUMENT_MAX_BYTES || file.size === 0) {
-      setError("Choose a PDF, JPG, PNG, or WebP file up to 4 MB. Compress or split large records into smaller PDFs.");
-      return;
-    }
+      setError("Choose a PDF, JPG, PNG, or WebP file up to 500 MB. Compress or split large records into smaller PDFs.");
+      return; }
     const current = attempt ?? { ...selectManagedUploadFile(null, file), category };
     busyRef.current = true;
     setUploading(true);
@@ -55,11 +54,7 @@ export function PatientDocumentUpload({ patientId }: { patientId: string }) {
       if (!response.ok) {
         const next = settleManagedUploadAttempt(current, { kind: "response", status: response.status });
         setAttempt(next ? current : null);
-        const detail = await response.json().catch(() => null);
-        setError(typeof detail?.error === "string" ? detail.error : "Upload failed. Please try again.");
-        return;
-      }
-      setAttempt(null);
+        const detail = await response.json().catch(() => null); setError(typeof detail?.error === "string" ? detail.error : "Upload failed. Please try again."); return; } setAttempt(null);
       setFile(null);
       if (inputRef.current) inputRef.current.value = "";
       toast.success(current.category === "lab-results" ? "Lab report attached" : "Document uploaded");
@@ -78,8 +73,7 @@ export function PatientDocumentUpload({ patientId }: { patientId: string }) {
     <div className="rounded-lg border border-border bg-card p-4">
       <h3 className="text-sm font-medium">Add a patient document</h3>
       <p className="mt-1 text-xs text-muted-foreground">
-        Attach previous records, referrals, scans, or external lab reports. PDF, JPG, PNG, or WebP; up to 4 MB per file. Compress or split larger files.
-      </p>
+        Attach previous records, referrals, scans, or external lab reports. PDF, JPG, PNG, or WebP; up to 500 MB per file. Compress or split larger files. </p>
       <div className="mt-3 flex flex-wrap items-end gap-3">
         <label className="space-y-1 text-xs font-medium">
           <span className="block">Document category</span>

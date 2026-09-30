@@ -183,32 +183,14 @@ async function handlePost(
     }
 
     // ---------- Parse multipart form data ----------
-    let formData: FormData;
-    try {
-      const body = await readRequestBytesWithLimit(
-        request,
-        UPLOAD_REQUEST_MAX_BYTES,
-      );
-      if (!body.ok) {
-        return NextResponse.json(
-          { error: "Upload exceeds maximum request size" },
-          { status: 413 },
-        );
-      }
-
-      const boundedBody = new ArrayBuffer(body.bytes.byteLength);
-      new Uint8Array(boundedBody).set(body.bytes);
-      const boundedRequest = new Request(request.url, {
-        method: request.method,
-        headers: request.headers,
-        body: boundedBody,
-      });
-      formData = await boundedRequest.formData();
-    } catch {
-      return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
-    }
-
-    const file = formData.get("file");
+   let formData: FormData;
+   try {
+	   formData = await request.formData();
+   } catch (e) {
+	   console.error("Error al parsear formData:", e);
+	   return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
+   } 
+   const file = formData.get("file");
     if (!file || !(file instanceof File)) {
       return NextResponse.json(
         { error: "Missing file field" },
